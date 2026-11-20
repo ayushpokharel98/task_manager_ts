@@ -28,6 +28,7 @@ const App = () => {
       id: crypto.randomUUID()
     };
     setTasks(prev => [...prev, newTask]);
+    setAddTaskModal(false);
   };
   const [formData, setFormData] = useState<FormData>({
     taskName: "",
@@ -81,6 +82,11 @@ const App = () => {
   const incompleteTasks = tasks.filter((tasks) => !tasks.isCompleted);
 
   const progress = (completedTasks.length / tasks.length)*100;
+
+  const tasksToShow = selectedTab === "all" ? tasks :
+                      selectedTab === "completed" ? tasks.filter((task)=>task.isCompleted):
+                      selectedTab === "today" ? tasks.filter((task)=> new Date(task.taskDate).toLocaleDateString()===todayDate.toLocaleDateString()):
+                      selectedTab === "upcoming"? tasks.filter((task)=> new Date(task.taskDate).toLocaleDateString()>todayDate.toLocaleDateString()): [];
 
   const handleTaskToggle = (id: string) => {
     setTasks(prevTasks =>
@@ -195,12 +201,12 @@ const App = () => {
             </div>
             <div className="flex flex-col gap-3 mt-3">
               {
-                tasks.length > 0 ? (
-                  tasks.map((task, index) =>
+                tasksToShow.length > 0 ? (
+                  tasksToShow.map((task, index) =>
                     <Task key={index} task={task} onToggle={handleTaskToggle} />
                   )
                 ) : (
-                  "No tasks found!"
+                  <p className="text-sm text-center w-full text-gray-400">No tasks found!</p>
                 )
               }
             </div>

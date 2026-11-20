@@ -1,6 +1,4 @@
-
 import { CalendarDays, CheckCheck, CircleCheck, Inbox, Sparkles, Sun, X } from "lucide-react";
-import { useState } from "react";
 import type { SidebarProps, WorkSpaceInterface } from "../../types/task";
 
 const Sidebar = ({

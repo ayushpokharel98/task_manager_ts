@@ -10,4 +10,6 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss()
   ],
+
+  base: '/task_manager_ts/'
 })
